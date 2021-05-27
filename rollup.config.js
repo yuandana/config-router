@@ -1,12 +1,12 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import { babel } from '@rollup/plugin-babel';
+import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import fileSize from 'rollup-plugin-filesize';
-import pkg from './package.json'
+import pkg from './package.json';
 
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV;
 
 const config = {
     input: `./src/index.js`,
@@ -15,22 +15,22 @@ const config = {
         {
             file: `./dist/es/index.js`,
             format: 'es',
-            name: '@yuandana/config-router',
+            name: pkg.name,
             globals: {
                 react: 'React',
                 'lodash-es': 'lodashES',
-                'react-router-dom': 'ReactRouterDOM',
-            },
+                'react-router-dom': 'ReactRouterDOM'
+            }
         },
         {
             file: `./dist/umd/index.js`,
             format: 'umd',
-            name: '@yuandana/config-router',
+            name: pkg.name,
             globals: {
                 react: 'React',
                 'lodash-es': 'lodashES',
-                'react-router-dom': 'ReactRouterDOM',
-            },
+                'react-router-dom': 'ReactRouterDOM'
+            }
         }
     ],
     plugins: [
@@ -43,23 +43,16 @@ const config = {
         replace({
             ENV: JSON.stringify(process.env.NODE_ENV),
             preventAssignment: true
-        }),
-        terser(),
-        fileSize()
+        })
     ]
 };
 
 if (env === 'production') {
     config.plugins.push(
-        terser({
-            compress: {
-                pure_getters: true,
-                unsafe: true,
-                unsafe_comps: true,
-                warnings: false
-            }
-        })
+        terser()
     );
 }
+
+config.plugins.push(fileSize());
 
 export default config;

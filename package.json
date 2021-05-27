@@ -4,6 +4,10 @@
     "description": "ReactRouter can be completed through configuration",
     "main": "dist/umd/index.js",
     "module": "dist/es/index.js",
+    "files": [
+        "dist",
+        "src"
+    ],
     "scripts": {
         "test": "test",
         "build": "cross-env NODE_ENV=production rollup -c"
@@ -24,7 +28,10 @@
         "url": "https://github.com/yuandana/config-router/issues"
     },
     "homepage": "https://github.com/yuandana/config-router#readme",
-    "dependencies": {},
+    "dependencies": {
+        "lodash-es": "^4.17.21",
+        "react-router-dom": "^5.2.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/plugin-transform-runtime": "^7.14.3",
@@ -40,8 +47,6 @@
         "rollup-plugin-terser": "^7.0.2"
     },
     "peerDependencies": {
-        "lodash-es": "^4.17.21",
-        "react": "^17.0.2",
-        "react-router-dom": "^5.2.0"
+        "react": "^17.0.2"
     }
 }
