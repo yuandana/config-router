@@ -1,3 +1,4 @@
+import React from 'react';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { isReactComponent, parsePath } from './utils';
 import { nameMapperRef } from './root';
