@@ -14,10 +14,9 @@ export const RedirectRoute = props => {
     const { route = {}, children } = props;
     const { redirect, component, fullPath } = route;
 
-    const location = useLocation();
+    const { pathname } = useLocation();
     const params = useParams();
 
-    const { pathname } = location;
     const nextFullPath = parsePath(fullPath, params);
 
     let nextRedirect = redirect;

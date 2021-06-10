@@ -10,7 +10,10 @@ const env = process.env.NODE_ENV;
 
 const config = {
     input: `./src/index.js`,
-    external: Object.keys(pkg.peerDependencies || {}),
+    external: [
+        ...Object.keys(pkg.peerDependencies || {}),
+        ...Object.keys(pkg.dependencies || {})
+    ],
     output: [
         {
             file: `./dist/es/index.js`,
@@ -18,7 +21,7 @@ const config = {
             name: pkg.name,
             globals: {
                 react: 'React',
-                'lodash-es': 'lodashES',
+                'lodash-es': 'lodash',
                 'react-router-dom': 'ReactRouterDOM'
             }
         },
@@ -28,7 +31,7 @@ const config = {
             name: pkg.name,
             globals: {
                 react: 'React',
-                'lodash-es': 'lodashES',
+                'lodash-es': 'lodash',
                 'react-router-dom': 'ReactRouterDOM'
             }
         }
@@ -48,9 +51,7 @@ const config = {
 };
 
 if (env === 'production') {
-    config.plugins.push(
-        terser()
-    );
+    config.plugins.push(terser());
 }
 
 config.plugins.push(fileSize());

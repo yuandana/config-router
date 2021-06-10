@@ -3,13 +3,14 @@ import { Link as ReactRouterLink, useParams } from 'react-router-dom';
 import { getConfigRouterLinkProps } from '../utils';
 
 export const Link = props => {
-    const locationParams = useParams();
+    const routerParams = useParams();
 
     const { params, ...otherProps } = props;
+
     let nextProps = {
         ...otherProps,
         params: {
-            ...locationParams,
+            ...routerParams,
             ...params
         }
     };

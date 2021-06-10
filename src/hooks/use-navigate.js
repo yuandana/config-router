@@ -4,8 +4,7 @@ import { navigationRef, nameMapperRef } from '../root';
 import { parsePath } from '../utils';
 
 export const useNavigate = () => {
-    const oldParams = useParams();
-
+    const routerParams = useParams();
     /**
      *
      */
@@ -23,7 +22,7 @@ export const useNavigate = () => {
             const { fullPath } = route;
             const nextPath = parsePath(
                 fullPath || path,
-                { ...oldParams, ...params },
+                { ...routerParams, ...params },
                 true
             );
             if (!path) {
@@ -35,7 +34,7 @@ export const useNavigate = () => {
                 navigationRef?.current?.history?.push(nextPath);
             }
         },
-        [oldParams]
+        [routerParams]
     );
 
     /**
@@ -48,7 +47,7 @@ export const useNavigate = () => {
             const { fullPath } = route;
             const nextPath = parsePath(
                 fullPath || path,
-                { ...oldParams, ...params },
+                { ...routerParams, ...params },
                 true
             );
             if (!path) {
@@ -60,7 +59,7 @@ export const useNavigate = () => {
                 navigationRef?.current?.history?.replace(nextPath);
             }
         },
-        [oldParams]
+        [routerParams]
     );
 
     return {
