@@ -1,6 +1,6 @@
 {
     "name": "@yuandana/config-router",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "ReactRouter can be completed through configuration",
     "main": "dist/umd/index.js",
     "module": "dist/es/index.js",
