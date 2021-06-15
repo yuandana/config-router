@@ -6,3 +6,5 @@ import { createRef } from 'react';
 export const navigationRef = createRef();
 
 export const nameMapperRef = createRef();
+
+export const flatRoutesRef = createRef();

@@ -1,6 +1,5 @@
-import { omit } from 'lodash-es';
-
-const nameMapper = new Map();
+import { pathToRegexp } from 'path-to-regexp';
+import { nameMapperRef, flatRoutesRef } from '../root';
 
 /**
  * 处理路由对象数据
@@ -10,32 +9,50 @@ const nameMapper = new Map();
  * @param {*} basePath
  * @returns
  */
-export const transformRoutesData = (routes = [], basePath = '') => {
-    const resultRoutes =
-        Array.isArray(routes) &&
-        routes.map(route => {
-            const { routes: childrenRoutes, path, name } = route;
-            const fullPath = `${basePath}${path}`.replace(/\/\/*/g, '/');
-            const { routes: nextChildrenRoutes } = transformRoutesData(
-                childrenRoutes,
-                fullPath
-            );
+export const transformRoutesData = (routes, basePath = '') => {
 
-            const nextRoutes = {
-                ...route,
-                fullPath,
-                routes: nextChildrenRoutes
-            };
+    if (!Array.isArray(routes)) {
+        return routes;
+    }
 
-            if (name) {
-                nameMapper.set(name, omit(nextRoutes, ['component', 'routes']));
+    const resultRoutes = routes.map(route => {
+        const { routes: childrenRoutes, path, name } = route;
+
+        if (!path) {
+            throw new Error(`@yuandana/config-router: path attribute required`);
+        }
+
+        const fullPath = `${basePath}${path}`.replace(/\/\/*/g, '/');
+
+        const regexp = pathToRegexp(fullPath);
+
+        const nextChildrenRoutes = transformRoutesData(
+            childrenRoutes,
+            fullPath
+        );
+
+        const nextRoute = {
+            ...route,
+            fullPath,
+            regexp,
+            routes: nextChildrenRoutes
+        };
+
+        if (name) {
+            if(!nameMapperRef.current){
+                nameMapperRef.current = new Map();
             }
+            nameMapperRef.current?.set(name, nextRoute);
+        }
 
-            return nextRoutes;
-        });
+        if(!flatRoutesRef.current){
+            flatRoutesRef.current = [];
+        }
 
-    return {
-        routes: resultRoutes,
-        nameMapper
-    };
+        flatRoutesRef.current?.push(nextRoute);
+
+        return nextRoute;
+    });
+
+    return resultRoutes
 };

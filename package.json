@@ -37,6 +37,7 @@
     "homepage": "https://github.com/yuandana/config-router#readme",
     "dependencies": {
         "lodash-es": "^4.17.21",
+        "path-to-regexp": "^6.2.0",
         "react-router-dom": "^5.2.0"
     },
     "devDependencies": {

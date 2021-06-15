@@ -27,14 +27,14 @@ export const useNavigate = () => {
             );
             if (!path) {
                 throw new Error(
-                    `You must specify a path to navigateTo function`
+                    `@yuandana/config-router: You must specify a path to navigateTo function`
                 );
             }
             if (nextPath) {
                 navigationRef?.current?.history?.push(nextPath);
             }
         },
-        [routerParams]
+        []
     );
 
     /**
@@ -52,7 +52,7 @@ export const useNavigate = () => {
             );
             if (!path) {
                 throw new Error(
-                    `You must specify a path to navigateTo function`
+                    `@yuandana/config-router: You must specify a path to navigateTo function`
                 );
             }
             if (nextPath) {

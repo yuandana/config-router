@@ -5,7 +5,7 @@ import {
     Switch
 } from 'react-router-dom';
 import { transformRoutesData } from './utils';
-import { navigationRef, nameMapperRef } from './root';
+import { navigationRef } from './root';
 import { RedirectRoute } from './redirect-route.jsx';
 
 const renderRouter = (routes = []) => {
@@ -41,10 +41,8 @@ const renderRouter = (routes = []) => {
 
 export const ConfigRouter = props => {
     const { routes = [] } = props;
-    const { routes: nextRoutes, nameMapper } = transformRoutesData(routes);
-    if (nameMapperRef) {
-        nameMapperRef.current = nameMapper;
-    }
+    const nextRoutes = transformRoutesData(routes);
+
     const children = renderRouter(nextRoutes);
 
     return <ReactRouter ref={navigationRef}>{children}</ReactRouter>;
